@@ -21,7 +21,7 @@ def index():
             db = dbConn['crawlerDB-GIT'] # connecting to the database called crawlerDB-GIT
             reviews = db[searchString].find({}) # searching the collection with the name same as the keyword
             if reviews.count() > 0: # if there is a collection with searched keyword and it has records in it
-                return render_template('results.html',reviews=reviews) # show the results to user
+                return render_template('results.html',reviews=reviews) # show the results to user.
             else:
                 flipkart_url = "https://www.flipkart.com/search?q=" + searchString # preparing the URL to search the product on flipkart
                 uClient = uReq(flipkart_url) # requesting the webpage from the internet
