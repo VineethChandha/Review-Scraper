@@ -18,7 +18,7 @@ def index():
         searchString = request.form['content'].replace(" ","") # obtaining the search string entered in the form
         try:
             dbConn = pymongo.MongoClient("mongodb://localhost:27017/")  # opening a connection to Mongo
-            db = dbConn['crawlerDB-GIT'] # connecting to the database called crawlerDB
+            db = dbConn['crawlerDB-GIT'] # connecting to the database called crawlerDB-GIT
             reviews = db[searchString].find({}) # searching the collection with the name same as the keyword
             if reviews.count() > 0: # if there is a collection with searched keyword and it has records in it
                 return render_template('results.html',reviews=reviews) # show the results to user
@@ -29,13 +29,17 @@ def index():
                 uClient.close() # closing the connection to the web server
                 flipkart_html = bs(flipkartPage, "html.parser") # parsing the webpage as HTML
                 bigboxes = flipkart_html.findAll("div", {"class": "_1AtVbE col-12-12"}) # seacrhing for appropriate tag to redirect to the product link
-                del bigboxes[0:2] # the first 2 members of the list do not contain relevant information, hence deleting them.
+                # The class IDs may change w.r.t website and the flipkart may also change them when they update the website
+                #Please check the site class ID if this code does not work.
+                del bigboxes[0:3] # the first 3 members of the list do not contain relevant information, hence deleting them it depends on product some products may start from 3 rd member.
+                #Samsung product starts from 4th member most of the other products start from 3rd member. So, pointing to 4th member will retrieve review for any product search.
                 box = bigboxes[0] #  taking the first iteration (for demo)
                 productLink = "https://www.flipkart.com" + box.div.div.div.a['href'] # extracting the actual product link
                 prodRes = requests.get(productLink) # getting the product page from server
                 prod_html = bs(prodRes.text, "html.parser") # parsing the product page as HTML
                 commentboxes = prod_html.find_all('div', {'class': "_16PBlm"}) # finding the HTML section containing the customer comments
-
+                # The class IDs may change w.r.t website and the flipkart may also change them when they update the website
+                # Please check the site class ID if this code does not work.
                 table = db[searchString] # creating a collection with the same name as search string. Tables and Collections are analogous.
                 #filename = searchString+".csv" #  filename to save the details
                 #fw = open(filename, "w") # creating a local file to save the details
@@ -68,7 +72,7 @@ def index():
                     #fw.write(searchString+","+name.replace(",", ":")+","+rating + "," + commentHead.replace(",", ":") + "," + custComment.replace(",", ":") + "\n")
                     mydict = {"Product": searchString, "Name": name, "Rating": rating, "CommentHead": commentHead,
                               "Comment": custComment} # saving that detail to a dictionary
-                    x = table.insert_one(mydict) #insertig the dictionary containing the rview comments to the collection
+                    x = table.insert_one(mydict) #inserting the dictionary containing the review comments to the collection
                     reviews.append(mydict) #  appending the comments to the review list
                 return render_template('results.html', reviews=reviews) # showing the review to the user
         except:
