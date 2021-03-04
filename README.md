@@ -117,18 +117,20 @@ vi.	Once we have the details, we’ll insert them into MongoDB. After that, we�
 
 e)	After this, we’ll just run our python app on our local system, and it’ll start scraping for reviews as shown below:	
 
-IDE:
+**IDE:**
 
 ![image](https://user-images.githubusercontent.com/69765021/109961894-8fc60480-7d10-11eb-8524-1bedd96853e3.png)
 
-Home Page(we get this once we click on the link present in run):
+**Home Page**(we get this once we click on the link present in run):
 
 ![image](https://user-images.githubusercontent.com/69765021/109962063-c6038400-7d10-11eb-8a8e-65ac9563daa2.png)
 
-Search Result:
+**Search Result:**
 
 ![image](https://user-images.githubusercontent.com/69765021/109962264-fcd99a00-7d10-11eb-8f30-488d403e22ee.png)
 
+# Note:
+The class IDs used might change when the flipkart website gets updated **It might be one of the reason for not working of the app**. Please update the ids accordingly.
 
 ## Thank you :pray:
 ## Happy coding :satisfied:
