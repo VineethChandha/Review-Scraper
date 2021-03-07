@@ -62,7 +62,7 @@ b)	The user enters the search keyword into the search box and presses the submit
 c)	The application now searches for reviews and shows the result on the ‘results.html’ page.
 7.	Understanding flask_app.py.
  
-a)	Import the necessary libraries:.
+a)	Import the necessary libraries by **pip install -r requirements.txt**.
 
 * from flask import Flask, render_template, request,jsonify
 * from flask_cors import CORS,cross_origin
